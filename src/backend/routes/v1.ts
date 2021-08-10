@@ -3,8 +3,8 @@
 // Imports
 import { Router } from "express";
 
-import { search } from "../controllers/song/queryController";
-import searchValidator from "../validators/song/searchValidator";
+import { search } from "../controllers/queryController";
+import searchValidator from "../validators/searchValidator";
 
 const apiV1Router = Router();
 
