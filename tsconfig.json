@@ -1,0 +1,27 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "lib": [
+            "ES2018",
+            "dom"
+        ],
+        "outDir": "build",
+        "rootDir": "src",
+        "sourceMap": true,
+        "strict": true,
+        "alwaysStrict": true,
+        "noImplicitAny": true,
+        "noImplicitThis": true,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "resolveJsonModule": true,
+        "skipLibCheck": true
+    },
+    "exclude": [
+        "build/**/*",
+        "src/frontend/**/*",
+        "**/*.spec.ts",
+        "config",
+        "node_modules/musickit-typescript/"
+    ]
+}

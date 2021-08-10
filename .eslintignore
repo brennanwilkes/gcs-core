@@ -1,0 +1,6 @@
+**/*.spec.[jt]s
+**/node_modules
+public-frontend/
+**/*.config.*
+src/dev/*
+src/frontend/spotifyWebSDK/
