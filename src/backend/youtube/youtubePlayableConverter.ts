@@ -25,7 +25,13 @@ export class YoutubePlayableConverter implements playableConverter<YoutubePlayab
 					const youtubeDetails = await searchYoutubeDetailed(youtubeIds[i]).catch(reject);
 
 					if (youtubeDetails && this.isEquivalentToSong(base, youtubeDetails)) {
-						base.youtubeId = youtubeIds[i];
+						base.ids = [
+							...base.ids,
+							{
+								label: "youtube",
+								id: youtubeIds[i]
+							}
+						];
 						return Promise.resolve(base as YoutubePlayable);
 					}
 				}
@@ -35,7 +41,13 @@ export class YoutubePlayableConverter implements playableConverter<YoutubePlayab
 	}
 
 	directUpgradeToPlayable: (song: Song, youtubeId: string) => YoutubePlayable = (song: Song, youtubeId: string) => {
-		song.youtubeId = youtubeId;
+		song.ids = [
+			...song.ids,
+			{
+				label: "youtube",
+				id: youtubeId
+			}
+		];
 		return song as YoutubePlayable;
 	}
 }

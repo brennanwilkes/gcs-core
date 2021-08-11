@@ -23,7 +23,13 @@ export class MusicKitPlayableConverter implements playableConverter<MusicKitPlay
 			determinedSearchMusicKitBySong(base).then(results => {
 				for (let i = 0; i < results.length; i++) {
 					if (this.isEquivalentToSong(base, results[i])) {
-						base.musicKitId = results[i].musicKitId;
+						base.ids = [
+							...base.ids,
+							{
+								label: "musicKit",
+								id: results[i].musicKitId
+							}
+						];
 						return Promise.resolve(base as MusicKitPlayable);
 					}
 				}
@@ -33,7 +39,13 @@ export class MusicKitPlayableConverter implements playableConverter<MusicKitPlay
 	}
 
 	directUpgradeToPlayable: (song: Song, musicKitId: string) => MusicKitPlayable = (song: Song, musicKitId: string) => {
-		song.musicKitId = musicKitId;
+		song.ids = [
+			...song.ids,
+			{
+				label: "musicKit",
+				id: musicKitId
+			}
+		];
 		return song as MusicKitPlayable;
 	}
 }
