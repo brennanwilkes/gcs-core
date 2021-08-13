@@ -4,10 +4,13 @@ import { generateRefreshedCredential } from "./connection";
 
 const invalidDataResponse = "Spotify returned invalid data";
 
-export default async (query: string, limit: number = CONFIG.defaultApiLimit): Promise<SpotifyResult[]> => {
+export default async (query: string, limit: number = CONFIG.defaultApiLimit, offset: number = 0): Promise<SpotifyResult[]> => {
 	return new Promise<SpotifyResult[]>((resolve, reject) => {
 		generateRefreshedCredential().then(spotifyApi => {
-			spotifyApi.searchTracks(query, {limit}).then(data => {
+			spotifyApi.searchTracks(query, {
+				limit,
+				offset
+			}).then(data => {
 				if (data.body?.tracks?.items) {
 					resolve(data.body.tracks.items.filter(item => !!item).map(item => new SpotifyResultFromApi(item)));
 				} else {

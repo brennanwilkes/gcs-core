@@ -6,5 +6,6 @@ export default {
 	encryptionSecret: process.env.TOKEN_SECRET,
 	encryptionExpiryTime: 21600,
 	databaseConnectionString: process.env.DB_CONNECTION,
-	defaultApiLimit: 5
+	defaultApiLimit: 5,
+	maximumApiLimit: 50,
 };

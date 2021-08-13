@@ -45,15 +45,29 @@ export const spotifyIdValidator = (variable: ValidationChain): ValidationChain =
 	.matches(spotifyIdRegex)
 	.withMessage("Spotify ID is not valid");
 
-export const limitValidator = (limit: number = CONFIG.defaultApiLimit): ValidationChain => query("limit").optional()
+export const limitValidator = (
+	limit: number = CONFIG.defaultApiLimit,
+	maximum: number = CONFIG.maximumApiLimit
+): ValidationChain => query("limit").optional()
 	.default(limit)
+	.trim()
+	.escape()
+	.isNumeric()
+	.isInt({
+		min: 1,
+		max: maximum
+	})
+	.toInt();
+
+export const paginateValidator = query("page").optional()
+	.default(1)
 	.trim()
 	.escape()
 	.isNumeric()
 	.toInt();
 
-export const paginateValidator = query("page").optional()
-	.default(1)
+export const offsetValidator = query("offset").optional()
+	.default(0)
 	.trim()
 	.escape()
 	.isNumeric()

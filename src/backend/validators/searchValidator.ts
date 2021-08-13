@@ -1,6 +1,6 @@
 import { query } from "express-validator";
 import validationErrorHandler from "../errorHandlers/validationErrorHandler";
-import { limitValidator, paginateValidator } from "./validatorUtil";
+import { limitValidator, offsetValidator } from "./validatorUtil";
 
 const validMatchers = [
 	"spotify",
@@ -20,6 +20,6 @@ export default [
 		resolve(input);
 	})),
 	limitValidator(),
-	paginateValidator,
+	offsetValidator,
 	validationErrorHandler
 ];

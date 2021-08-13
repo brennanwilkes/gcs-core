@@ -30,8 +30,9 @@ export const query = (req: Request, res: Response): void => {
 	print(`Handling request for query search "${req.query.query}"`);
 
 	const limit: number = (typeof req.query.limit === "number") ? req.query.limit : CONFIG.defaultApiLimit;
+	const offset: number = (typeof req.query.offset === "number") ? req.query.offset : 0;
 
-	searchSpotify(String(req.query.query), limit).then(spotifyResults => {
+	searchSpotify(String(req.query.query), limit, offset).then(spotifyResults => {
 		return resolveSpotifySongs(spotifyResults.slice(0, limit), getLabels(req));
 	}).then(songs => {
 		res.send({
