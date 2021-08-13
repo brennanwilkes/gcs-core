@@ -32,6 +32,7 @@ export const print = function (...content: string[]): void {
 };
 
 export const getPage = (req: Request):number => (req.query.page as number | undefined) ?? 1;
+export const getOffset = (req: Request):number => (req.query.offset as number | undefined) ?? 0;
 export const getLimit = (req: Request):number => (req.query.limit as number | undefined) ?? CONFIG.defaultApiLimit;
 
 export const generateDashboardRedirect = (req: Request): string => `${req.protocol}://${req.get("host")}/dashboard`;
@@ -49,3 +50,16 @@ export const thresholdDistance = (
 };
 
 export const xOrMore = (vals: boolean[], x = 1) => vals.reduce((a, v) => a + (v ? 1 : 0), 0) >= x;
+
+export const getLabels: ((req: Request) => string[]) = (req: Request) => {
+	if(req.query.matchWith === undefined){
+		return [];
+	}
+	if(typeof req.query.matchWith === "string"){
+		return req.query.matchWith.split(",");
+	}
+	if(Array.isArray(req.query.matchWith) && req.query.matchWith.length > 0 && (typeof req.query.matchWith[0] == "string")){
+		return req.query.matchWith as string[];
+	}
+	return [];
+}

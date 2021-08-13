@@ -72,3 +72,26 @@ export const offsetValidator = query("offset").optional()
 	.escape()
 	.isNumeric()
 	.toInt();
+
+
+const validMatchers = [
+	"spotify",
+	"youtube",
+	"musicKit"
+];
+
+export const matchWithValidator = query("matchWith")
+	.optional()
+	.default("spotify")
+	.trim()
+	.escape()
+	.isString()
+	.custom((input: string) => new Promise((resolve, reject) => {
+		const vals = input.split(",");
+		vals.forEach(val => {
+			if(!validMatchers.includes(val)){
+				reject(new Error(`matchWith value "${val}" is not recognized`));
+			}
+		});
+		resolve(input);
+	}));
