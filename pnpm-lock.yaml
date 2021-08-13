@@ -8,6 +8,7 @@ specifiers:
   '@types/fast-levenshtein': ^0.0.2
   '@types/jsonwebtoken': ^8.5.4
   '@types/node': ^16.4.13
+  '@types/response-time': ^2.3.5
   '@types/spotify-web-api-node': ^5.0.3
   '@types/universal-analytics': ^0.4.5
   '@typescript-eslint/eslint-plugin': ^4.29.1
@@ -36,6 +37,7 @@ specifiers:
   mongoose: ^5.13.6
   nodemon: ^2.0.12
   npm-run-all: ^4.1.5
+  response-time: ^2.3.2
   rimraf: ^3.0.2
   spotify-web-api-node: ^5.0.2
   style-loader: ^3.2.1
@@ -65,6 +67,7 @@ dependencies:
   googleapis: 84.0.0
   jsonwebtoken: 8.5.1
   mongoose: 5.13.6
+  response-time: 2.3.2
   spotify-web-api-node: 5.0.2
   style-loader: 3.2.1
   universal-analytics: 0.4.23
@@ -78,6 +81,7 @@ devDependencies:
   '@types/fast-levenshtein': 0.0.2
   '@types/jsonwebtoken': 8.5.4
   '@types/node': 16.4.13
+  '@types/response-time': 2.3.5
   '@types/spotify-web-api-node': 5.0.3
   '@types/universal-analytics': 0.4.5
   '@typescript-eslint/eslint-plugin': 4.29.1_d4376362794b743c19f4cba25c7fc6f5
@@ -1375,6 +1379,13 @@ packages:
 
   /@types/range-parser/1.2.4:
     resolution: {integrity: sha512-EEhsLsD6UsDM1yFhAvy0Cjr6VwmpMWqFBCb9w07wVugF7w9nfajxLuVmngTIpgS6svCnm6Vaw+MZhoDCKnOfsw==}
+    dev: true
+
+  /@types/response-time/2.3.5:
+    resolution: {integrity: sha512-4ANzp+I3K7sztFFAGPALWBvSl4ayaDSKzI2Bok+WNz+en2eB2Pvk6VCjR47PBXBWOkEg2r4uWpZOlXA5DNINOQ==}
+    dependencies:
+      '@types/express': 4.17.13
+      '@types/node': 16.4.13
     dev: true
 
   /@types/serve-static/1.13.10:
@@ -4118,6 +4129,11 @@ packages:
       ee-first: 1.1.1
     dev: false
 
+  /on-headers/1.0.2:
+    resolution: {integrity: sha512-pZAE+FJLoyITytdqK0U5s+FIpjN0JP3OzFi/u8Rx+EV5/W+JTWGXG8xFzevE7AjBfDqHv/8vL8qQsIhHnqRkrA==}
+    engines: {node: '>= 0.8'}
+    dev: false
+
   /once/1.4.0:
     resolution: {integrity: sha1-WDsap3WWHUsROsF9nFC6753Xa9E=}
     dependencies:
@@ -4644,6 +4660,14 @@ packages:
     dependencies:
       is-core-module: 2.5.0
       path-parse: 1.0.7
+
+  /response-time/2.3.2:
+    resolution: {integrity: sha1-/6cbq5UtYvfB1Jt0NDVfvGjf/Fo=}
+    engines: {node: '>= 0.8.0'}
+    dependencies:
+      depd: 1.1.2
+      on-headers: 1.0.2
+    dev: false
 
   /responselike/1.0.2:
     resolution: {integrity: sha1-kYcg7ztjHFZCvgaPFa3lpG9Loec=}

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { print } from "../util/util";
+import { CONFIG, print } from "../util/util";
 import internalErrorHandler from "../errorHandlers/internalErrorHandler";
 import searchSpotify, { getSpotify } from "../spotify/searchSpotify";
 import { SongApiObj } from "../../types/song";
@@ -29,8 +29,10 @@ export const search = (req: Request, res: Response): void => {
 export const query = (req: Request, res: Response): void => {
 	print(`Handling request for query search "${req.query.query}"`);
 
-	searchSpotify(String(req.query.query)).then(spotifyResults => {
-		return resolveSpotifySongs(spotifyResults.slice(0, 5), getLabels(req));
+	const limit: number = (typeof req.query.limit === "number") ? req.query.limit : CONFIG.defaultApiLimit;
+
+	searchSpotify(String(req.query.query), limit).then(spotifyResults => {
+		return resolveSpotifySongs(spotifyResults.slice(0, limit), getLabels(req));
 	}).then(songs => {
 		res.send({
 			//songs: songs.map(song => new SongApiObj(song, [new DownloadLink(req, song)]))

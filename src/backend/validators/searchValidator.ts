@@ -1,6 +1,6 @@
-import { oneOf, query } from "express-validator";
+import { query } from "express-validator";
 import validationErrorHandler from "../errorHandlers/validationErrorHandler";
-import { spotifyWebRegex, spotifyURIRegex, spotifyIdRegex } from "./validatorUtil";
+import { limitValidator, paginateValidator } from "./validatorUtil";
 
 const validMatchers = [
 	"spotify",
@@ -10,7 +10,7 @@ const validMatchers = [
 
 export default [
 	query("query").exists().trim().isString(),
-	query("matchWith").trim().escape().isString().custom((input: string) => new Promise((resolve, reject) => {
+	query("matchWith").optional().default("spotify").trim().escape().isString().custom((input: string) => new Promise((resolve, reject) => {
 		const vals = input.split(",");
 		vals.forEach(val => {
 			if(!validMatchers.includes(val)){
@@ -19,6 +19,7 @@ export default [
 		});
 		resolve(input);
 	})),
-
+	limitValidator(),
+	paginateValidator,
 	validationErrorHandler
 ];
