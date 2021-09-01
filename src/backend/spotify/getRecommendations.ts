@@ -79,20 +79,12 @@ export default async (options: RecommendationOptions, userAccessToken?: string):
 	}
 
 	return new Promise<SpotifyResult[]>((resolve, reject) => {
-		console.dir(1);
 		generateRefreshedCredential().then(async spotifyApi => {
-			console.dir(2);
 			if (userAccessToken) {
-				console.dir(3);
 				spotifyApi.setAccessToken(userAccessToken);
 			}
-			console.dir(4);
-			console.dir(options);
-			console.dir(userAccessToken);
-
 			return spotifyApi.getRecommendations(options);
 		}).then(recommendationData => {
-			console.dir(5);
 			return Promise.all(recommendationData.body.tracks.map(s => getSpotifyTrack(s.id)));
 		}).then(resolve).catch(reject);
 	});

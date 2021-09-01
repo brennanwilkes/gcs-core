@@ -23,7 +23,10 @@ export default (req: Request, res:Response): void => {
 					});
 				}
 				else if(state.match(/^recommend.*/)){
-					res.redirect(`/api/v1/${state}&authorization=Bearer ${data.body.access_token}`);
+					res.redirect(`/api/v1/${state}${state.includes("?") ? "&" : "?"}authorization=Bearer ${data.body.access_token}`);
+				}
+				else if(state.match(/^top.*/)){
+					res.redirect(`/api/v1/spotify/${state}${state.includes("?") ? "&" : "?"}authorization=Bearer ${data.body.access_token}`);
 				}
 				else{
 					internalErrorHandler(req, res)(`Invalid state: ${state}`);

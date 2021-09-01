@@ -33,7 +33,7 @@ export const print = function (...content: string[]): void {
 
 export const getPage = (req: Request):number => (req.query.page as number | undefined) ?? 1;
 export const getOffset = (req: Request):number => (req.query.offset as number | undefined) ?? 0;
-export const getLimit = (req: Request):number => (req.query.limit as number | undefined) ?? CONFIG.defaultApiLimit;
+export const getLimit = (req: Request, defaultLimit: number = CONFIG.defaultApiLimit):number => (req.query.limit as number | undefined) ?? defaultLimit;
 
 export const generateDashboardRedirect = (req: Request): string => `${req.protocol}://${req.get("host")}/dashboard`;
 
