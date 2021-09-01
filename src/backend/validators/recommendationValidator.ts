@@ -1,7 +1,9 @@
 
 import { query, oneOf } from "express-validator";
 import validationErrorHandler from "../errorHandlers/validationErrorHandler";
+import tokenValidator from "./tokenValidator";
 import { limitValidator, spotifyIdRegex } from "./validatorUtil";
+import { authorizationErrorRedirect } from "../errorHandlers/authorizationErrorHandler";
 
 export default [
 	limitValidator(10, 50),
@@ -32,5 +34,7 @@ export default [
 	query("mode").optional().isBoolean().toBoolean(),
 	query("tempo").optional().isInt({ min: 0, max: 200 }).toInt(),
 	query("valence").optional().isFloat({ min: 0.0, max: 1.0 }).toFloat(),
-	validationErrorHandler
+	validationErrorHandler,
+	...tokenValidator,
+	authorizationErrorRedirect(`/auth/spotify?state=recommend`, true)
 ];

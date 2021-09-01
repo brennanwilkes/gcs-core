@@ -12,3 +12,23 @@ export default (req: Request, res: Response, next: NextFunction): Response | und
 	}
 	next();
 };
+
+export const authorizationErrorRedirect = (url0: string, applyQuery: boolean = false) => {
+	return (req: Request, res: Response, next: NextFunction): void => {
+		let url = url0;
+
+		const errors = validationResult(req);
+		if (!errors.isEmpty()) {
+			if(applyQuery){
+				const queryIndex = req.originalUrl.indexOf("?");
+				const queryString = (queryIndex >= 0) ? req.originalUrl.slice(queryIndex) : "";
+				url = `${url}${encodeURIComponent(queryString)}`;
+				url = url.replace(/state=(.*)/, (_match: string, $1: string) => `state=${encodeURI($1)}`);
+			}
+			res.redirect(url);
+		}
+		else{
+			next();
+		}
+	}
+}

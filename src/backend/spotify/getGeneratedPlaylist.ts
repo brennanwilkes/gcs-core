@@ -11,36 +11,48 @@ import getRecommendations, { RecommendationOptions } from "./getRecommendations"
 import { getLimit } from "../util/util";
 
 export default (req: Request): Promise<SpotifyResult[]> => {
+
 	const options: RecommendationOptions = {};
-	if (req.body.acousticness !== undefined) {
-		options.target_acousticness = req.body.acousticness;
+	if (req.query.acousticness !== undefined && (typeof req.query.acousticness === "number")) {
+		options.target_acousticness = req.query.acousticness;
 	}
-	if (req.body.danceability !== undefined) {
-		options.target_danceability = req.body.danceability;
+	if (req.query.danceability !== undefined && (typeof req.query.danceability === "number")) {
+		options.target_danceability = req.query.danceability;
 	}
-	if (req.body.energy !== undefined) {
-		options.target_energy = req.body.energy;
+	if (req.query.energy !== undefined && (typeof req.query.energy === "number")) {
+		options.target_energy = req.query.energy;
 	}
-	if (req.body.instrumentalness !== undefined) {
-		options.target_instrumentalness = req.body.instrumentalness;
+	if (req.query.instrumentalness !== undefined && (typeof req.query.instrumentalness === "number")) {
+		options.target_instrumentalness = req.query.instrumentalness;
 	}
-	if (req.body.key !== undefined) {
-		options.target_key = req.body.key;
+	if (req.query.key !== undefined && (typeof req.query.key === "number")) {
+		options.target_key = req.query.key;
 	}
-	if (req.body.loudness !== undefined) {
-		options.target_loudness = req.body.loudness;
+	if (req.query.loudness !== undefined && (typeof req.query.loudness === "number")) {
+		options.target_loudness = req.query.loudness;
 	}
-	if (req.body.mode !== undefined) {
-		options.target_mode = req.body.mode ? 1 : 0;
+	if (req.query.mode !== undefined && (typeof req.query.mode === "boolean")) {
+		options.target_mode = req.query.mode ? 1 : 0;
 	}
-	if (req.body.tempo !== undefined) {
-		options.target_tempo = req.body.tempo;
+	if (req.query.tempo !== undefined && (typeof req.query.tempo === "number")) {
+		options.target_tempo = req.query.tempo;
 	}
-	if (req.body.valence !== undefined) {
-		options.target_valence = req.body.valence;
+	if (req.query.valence !== undefined && (typeof req.query.valence === "number")) {
+		options.target_valence = req.query.valence;
 	}
 	options.limit = getLimit(req);
 
-	options.seed_tracks = req.body.seed_tracks;
-	return getRecommendations(options);
+	options.seed_tracks = req.query.seed_tracks as string[];
+
+	let token: string | undefined;
+	if(
+		req.headers.authorization &&
+		typeof req.headers.authorization === "string" &&
+		req.headers.authorization.length > 0 &&
+		req.headers.authorization.includes("Bearer ")
+	){
+		token = req.headers.authorization.split("Bearer ")[1];
+	}
+
+	return getRecommendations(options, token);
 };
