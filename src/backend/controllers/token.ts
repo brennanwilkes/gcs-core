@@ -22,6 +22,21 @@ export default (req: Request, res:Response): void => {
 						}
 					});
 				}
+				else if(state === "post"){
+
+					const payload = JSON.stringify({
+						spotify: {
+							refresh: data.body.refresh_token,
+							access: data.body.access_token
+						}
+					});
+
+					res.send(`
+						<html><head><script>
+							window.opener.postMessage("${encodeURIComponent(payload)}", "*");
+						</script></head></html>`
+					);
+				}
 				else if(state.match(/^recommend.*/)){
 					res.redirect(`/api/v1/${state}${state.includes("?") ? "&" : "?"}authorization=Bearer ${data.body.access_token}`);
 				}
