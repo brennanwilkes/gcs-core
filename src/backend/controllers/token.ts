@@ -25,7 +25,7 @@ export default (req: Request, res:Response): void => {
 				else if(state.match(/^recommend.*/)){
 					res.redirect(`/api/v1/${state}${state.includes("?") ? "&" : "?"}authorization=Bearer ${data.body.access_token}`);
 				}
-				else if(state.match(/^top.*/)){
+				else if(state.match(/^top(Artists|Tracks).*/)){
 					res.redirect(`/api/v1/spotify/${state}${state.includes("?") ? "&" : "?"}authorization=Bearer ${data.body.access_token}`);
 				}
 				else{

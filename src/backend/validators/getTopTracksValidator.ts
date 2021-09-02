@@ -11,5 +11,14 @@ export default [
 	offsetValidator,
 	validationErrorHandler,
 	...tokenValidator,
-	authorizationErrorRedirect(`/auth/spotify?state=top`, true)
+	authorizationErrorRedirect(`/auth/spotify?state=topTracks`, true)
+];
+
+export const getTopArtistsValidator = [
+	query("time_range").optional().default("long_term").trim().escape().matches(/^(long_term|medium_term|short_term)$/),
+	limitValidator(50),
+	offsetValidator,
+	validationErrorHandler,
+	...tokenValidator,
+	authorizationErrorRedirect(`/auth/spotify?state=topArtists`, true)
 ];

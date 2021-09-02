@@ -3,12 +3,11 @@ import { getLabels, getLimit, getOffset, print } from "../util/util";
 import internalErrorHandler from "../errorHandlers/internalErrorHandler";
 import { SongApiObj } from "../../types/song";
 import resolveSpotifySongs from "../util/resolveSongs";
-import { getTopTracks, TopTracksOptions } from "../spotify/getTopTracks";
+import { getTopArtists, getTopTracks, TopTracksOptions } from "../spotify/getTopTracks";
 
 const topTracksDefaultLimit = 50;
 
-export const getTopTracksController = (req: Request, res: Response): void => {
-
+const getToken = (req: Request): string => {
 	let token: string | undefined;
 	if(
 		req.headers.authorization &&
@@ -22,6 +21,10 @@ export const getTopTracksController = (req: Request, res: Response): void => {
 		token = "";
 	}
 
+	return token;
+}
+
+const getOptions = (req: Request): TopTracksOptions => {
 	const options: TopTracksOptions = {};
 
 	options.limit = getLimit(req, topTracksDefaultLimit);
@@ -35,7 +38,13 @@ export const getTopTracksController = (req: Request, res: Response): void => {
 		options.time_range = "short_term";
 	}
 
-	console.dir(options);
+	return options;
+}
+
+export const getTopTracksController = (req: Request, res: Response): void => {
+
+	const token = getToken(req);
+	const options = getOptions(req);
 
 	getTopTracks(
 		token,
@@ -45,6 +54,21 @@ export const getTopTracksController = (req: Request, res: Response): void => {
 	}).then(songs => {
 		res.send({
 			songs: songs.map(song => new SongApiObj(song, []))
+		});
+	}).catch(internalErrorHandler(req, res));
+};
+
+export const getTopArtistsController = (req: Request, res: Response): void => {
+
+	const token = getToken(req);
+	const options = getOptions(req);
+
+	getTopArtists(
+		token,
+		options
+	).then(spotifyResults => {
+		res.send({
+			artists: spotifyResults.slice(0, getLimit(req, topTracksDefaultLimit))
 		});
 	}).catch(internalErrorHandler(req, res));
 };

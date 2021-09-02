@@ -24,3 +24,28 @@ export const getTopTracks = async (userAccessToken: string, options: TopTracksOp
 		}).then(resolve).catch(reject);
 	});
 };
+
+export interface Artist{
+	name: string;
+	ids: {
+		spotify: string
+	};
+}
+
+export const getTopArtists = async (userAccessToken: string, options: TopTracksOptions): Promise<Artist[]> => {
+	return new Promise<Artist[]>((resolve, reject) => {
+		generateRefreshedCredential().then(async spotifyApi => {
+			spotifyApi.setAccessToken(userAccessToken);
+			return spotifyApi.getMyTopArtists(options);
+		}).then(recommendationData => {
+			return Promise.all(recommendationData.body.items.map(a => {
+				return {
+					name: a.name,
+					ids: {
+						spotify: a.id
+					}
+				}
+			}));
+		}).then(resolve).catch(reject);
+	});
+};
