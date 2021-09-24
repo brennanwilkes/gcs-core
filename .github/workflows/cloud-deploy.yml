@@ -1,0 +1,38 @@
+name: Docker
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+
+    deploy:
+
+        name: Setup Gcloud Account
+        runs-on: ubuntu-latest
+        env:
+          IMAGE_NAME: gcr.io/${{ secrets.GOOGLE_CLOUD_PROJECT }}/gcs-core
+        steps:
+
+        - name: Login
+          uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+          with:
+            project_id: ${{ secrets.GOOGLE_CLOUD_PROJECT }}
+            service_account_key: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+
+        - name: Configure Docker
+          run: gcloud auth configure-docker --quiet
+
+        - name: Checkout repository
+          uses: actions/checkout@v2
+
+        - name: Build Docker image
+          run: docker build . -t $IMAGE_NAME
+
+        - name: Push Docker image
+          run: docker push $IMAGE_NAME
+
+        - name: Deploy Docker image
+          run: gcloud run deploy gcs-core --image $IMAGE_NAME --region us-central1 --platform managed --region us-west1 --allow-unauthenticated --cpu 1 --memory 256M --max-instances 4 --set-env-vars="DB_CONNECTION${{ secrets.DB_CONNECTION }}" --set-env-vars="SPOTIFY_ID${{ secrets.SPOTIFY_ID }}" --set-env-vars="SPOTIFY_SECRET${{ secrets.SPOTIFY_SECRET }}" --set-env-vars="VERBOSE=true" --set-env-vars="TOKEN_SECRET${{ secrets.TOKEN_SECRET }}" --set-env-vars="GOOGLE_CLIENT_ID${{ secrets.GOOGLE_CLIENT_ID }}" --set-env-vars="GOOGLE_CLIENT_SECRET${{ secrets.GOOGLE_CLIENT_SECRET }}" --set-env-vars="GOOGLE_CLOUD_PROJECT${{ secrets.GOOGLE_CLOUD_PROJECT }}" --set-env-vars="MUSIC_KIT_SECRET${{ secrets.MUSIC_KIT_SECRET }}" --set-env-vars="MUSIC_KIT_KEY_ID${{ secrets.MUSIC_KIT_KEY_ID }}" --set-env-vars="MUSIC_KIT_TEAM_ID${{ secrets.MUSIC_KIT_TEAM_ID }}"
