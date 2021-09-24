@@ -1,4 +1,3 @@
-import { SongDoc } from "../database/models/song";
 import { SpotifyResult } from "./spotifyResult";
 import { Link } from "./link";
 
@@ -84,26 +83,6 @@ export class SongObj implements Song {
 		this.thumbnailUrl = thumbnailUrl;
 		this.releaseDate = releaseDate;
 		if (id) this.id = id;
-	}
-}
-
-export class SongObjFromQuery extends SongObj implements Song {
-	constructor (results: SongDoc) {
-		super(
-			results.title,
-			results.artist,
-			results.album,
-			results.duration,
-			results.explicit,
-			{
-				spotifyId: results.spotifyId,
-				youtubeId: results.youtubeId,
-				musicKitId: results.musicKitId
-			},
-			results.thumbnailUrl,
-			results.releaseDate,
-			String(results._id)
-		);
 	}
 }
 

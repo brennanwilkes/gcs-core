@@ -22,28 +22,6 @@ export class LinkObj implements Link {
 	}
 }
 
-export class DownloadLink extends LinkObj implements Link {
-	constructor (req: Request, song: Song) {
-		super(
-			"Download",
-			"POST",
-			`${req.baseUrl}/songs?spotifyId=${song.spotifyId}`,
-			["application/json"]
-		);
-	}
-}
-
-export class PlayAudioLink extends LinkObj implements Link {
-	constructor (req: Request, audio: Song) {
-		super(
-			"Play Audio",
-			"GET",
-			`${req.baseUrl}/audio/${audio.audioId}`,
-			["audio/mpeg"]
-		);
-	}
-}
-
 export class SelfLink extends LinkObj implements Link {
 	constructor (req: Request, id: string, resourcePath: string) {
 		super(
