@@ -65,4 +65,5 @@ export const getLabels: ((req: Request) => string[]) = (req: Request) => {
 }
 
 // Utility method to generate the spotify redirect URI. Maybe should be configurable
-export const generateSpotifyRedirectURI = (req: Request): string => `${req.protocol}://${req.get("host")}/auth/token`;
+// export const generateSpotifyRedirectURI = (req: Request): string => `${req.protocol}://${req.get("host")}/auth/token`;
+export const generateSpotifyRedirectURI = (req: Request): string => `https://${req.get("host")}/auth/token`;
