@@ -6,9 +6,11 @@ import { getSpotifyResource } from "../controllers/getController";
 
 import { search } from "../controllers/queryController";
 import { getSpotifyRecommendations } from "../controllers/recommendationController";
+import { createPlaylist } from "../controllers/createController";
 import getSpotifyValidator from "../validators/getSpotifyValidator";
 import {getTopArtistsController, getTopTracksController} from "../controllers/getTopTracksController";
 import recommendationValidator from "../validators/recommendationValidator";
+import createValidator from "../validators/createValidator";
 import getTopTracksValidator, { getTopArtistsValidator } from "../validators/getTopTracksValidator";
 import searchValidator from "../validators/searchValidator";
 
@@ -23,5 +25,6 @@ apiV1Router.get("/spotify/topTracks", getTopTracksValidator, getTopTracksControl
 apiV1Router.get("/spotify/topArtists", getTopArtistsValidator, getTopArtistsController);
 apiV1Router.get("/spotify/:id", getSpotifyValidator, getSpotifyResource);
 apiV1Router.get("/recommend", recommendationValidator, getSpotifyRecommendations);
+apiV1Router.post("/create", createValidator, createPlaylist);
 
 export default apiV1Router;

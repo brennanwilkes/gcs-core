@@ -1,4 +1,4 @@
-import express, { Express, Router } from "express";
+import express, { Express, Router, Request, Response, NextFunction } from "express";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import path from "path";
@@ -41,6 +41,13 @@ export default class RadioServer {
 
 		// support json encoded bodies
 		this.app.use(express.json());
+
+		this.app.use((req: Request, res: Response, next: NextFunction) => {
+			res.setHeader("Access-Control-Allow-Origin", "*");
+			res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+			res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With');
+			next();
+		});
 
 		// Parse cookies
 		this.app.use(cookieParser());

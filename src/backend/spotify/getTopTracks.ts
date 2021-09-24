@@ -1,4 +1,4 @@
-import { SpotifyResult } from "../../types/spotifyResult";
+import { SpotifyResult, SpotifyResultFromApi } from "../../types/spotifyResult";
 import { generateRefreshedCredential } from "./connection";
 import { getSpotifyTrack } from "./searchSpotify";
 
@@ -20,8 +20,12 @@ export const getTopTracks = async (userAccessToken: string, options: TopTracksOp
 			spotifyApi.setAccessToken(userAccessToken);
 			return spotifyApi.getMyTopTracks(options);
 		}).then(recommendationData => {
-			return Promise.all(recommendationData.body.items.map(s => getSpotifyTrack(s.id)));
-		}).then(resolve).catch(reject);
+			return Promise.all(recommendationData.body.items.map(s => Promise.resolve(new SpotifyResultFromApi(s))));
+			//return Promise.all(recommendationData.body.items.map(s => getSpotifyTrack(s.id)));
+		}).then(resolve).catch(e => {
+			console.dir(e);
+			reject(e);
+		});
 	});
 };
 

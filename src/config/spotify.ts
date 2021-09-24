@@ -1,7 +1,7 @@
 import "dotenv/config";
 export default {
 	oauth2: {
-		scope: ["user-read-private", "user-read-email", "streaming", "user-top-read"]// "playlist-read-private", "user-top-read"]
+		scope: ["user-top-read", "playlist-modify-public"]
 	},
 	credentials: {
 		spotifyClientId: process.env.SPOTIFY_ID,
