@@ -1,5 +1,5 @@
 {
-    "name": "gcs-radio",
+    "name": "gcs-core",
     "version": "1.0.0",
     "description": "",
     "main": "src/index.ts",
@@ -11,14 +11,14 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+ssh://git@gitlab.com/brennanwilkes/gcs-radio.git"
+        "url": "git+ssh://git@gitlab.com/brennanwilkes/gcs-core.git"
     },
     "author": "Brennan Wilkes <brennan@codexwilkes.com>",
     "license": "ISC",
     "bugs": {
-        "url": "https://gitlab.com/brennanwilkes/gcs-radio/issues"
+        "url": "https://gitlab.com/brennanwilkes/gcs-core/issues"
     },
-    "homepage": "https://gitlab.com/brennanwilkes/gcs-radio#readme",
+    "homepage": "https://gitlab.com/brennanwilkes/gcs-core#readme",
     "dependencies": {
         "@babel/core": "^7.15.0",
         "@babel/preset-env": "^7.15.0",

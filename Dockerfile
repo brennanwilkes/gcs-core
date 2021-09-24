@@ -27,7 +27,7 @@ RUN pnpm install
 # Copy local code to the container image.
 COPY . ./
 
-RUN npm run build:production
+RUN npm run build
 
 # Run the web service on container startup.
 CMD [ "npm", "start" ]
