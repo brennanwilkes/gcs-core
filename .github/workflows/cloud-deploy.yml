@@ -17,7 +17,7 @@ jobs:
         steps:
 
         - name: Login
-          uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+          uses: google-github-actions/setup-gcloud@master
           with:
             project_id: ${{ secrets.GOOGLE_CLOUD_PROJECT }}
             service_account_key: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
