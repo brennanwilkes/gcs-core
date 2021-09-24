@@ -19,6 +19,7 @@ export const createPlaylist = (req: Request, res: Response): void => {
 	}
 
 	const tracks: string[] = req.query.tracks as string[];
+
 	const name: string = req.query.name as string;
 	const description: (string | undefined) = req.query.description as (string | undefined);
 

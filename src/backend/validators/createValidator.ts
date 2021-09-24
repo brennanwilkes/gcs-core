@@ -10,8 +10,8 @@ export default [
 		[
 			query("tracks")
 				.exists()
-				.isArray({ min: 1, max: 5 })
-				.withMessage("Playlist must have 1-5 seed songs (spotify IDS)"),
+				.isArray({ min: 1 })
+				.withMessage("Playlist must atleast 1 song (spotify IDS)"),
 			query("tracks.*")
 				.exists()
 				.trim()
@@ -26,7 +26,6 @@ export default [
 	]),
 	query("name").exists().isString().trim().escape().exists().isString(),
 	query("description").optional().isString().trim().escape(),
-	validationErrorHandler,
 	...tokenValidator,
-	authorizationErrorRedirect(`/auth/spotify?state=recommend`, true)
+	validationErrorHandler,
 ];
